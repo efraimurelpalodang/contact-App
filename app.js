@@ -1,23 +1,11 @@
-//* file system
-const fs = require('node:fs');
+const { askQuestion, simpanKontak } = require('./contacts.js')
 
-//! Readline
-const readline = require('node:readline');
-const { stdin: input, stdout: output} = require('node:process');
-const rl = readline.createInterface({input, output});
+const main = async () => {
+  const nama = await askQuestion('Masukkan nama');
+  const email = await askQuestion('Masukkan email');
+  const noHp = await askQuestion('Masukkan nomor handphone');
 
-rl.question('Masukkan nama anda : ', (nama) => {
-  rl.question('Masukkan nomor hp anda : ', (noHp) => {
-    const contact = { nama, noHp };
-    const file = fs.readFileSync('data/contacts.json', 'utf-8');
-    const contacts = JSON.parse(file);
+  simpanKontak(nama, email, noHp);
+}
 
-    contacts.push(contact);
-
-    fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
-
-    console.log('TERIMA KASIH SUDAH MEMASUKKAN DATA!!');
-
-    rl.close();
-  })
-})
+main();
