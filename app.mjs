@@ -1,8 +1,8 @@
 // mengambil argumen dari command line menggunakan medule yargs
-const { simpanKontak } = require('./contacts');
-const yargs = require("yargs");
+import simpanKontak from "./contacts.mjs";
+import yargs from "yargs";
 
-yargs.command({
+yargs(process.argv.slice(2)).command({
   command: 'add',
   describe: 'Menambahkan kontak baru',
   builder: {
