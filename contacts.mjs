@@ -1,6 +1,7 @@
 //* file system
 import fs from 'node:fs';
 import chalk from 'chalk';
+import validator from 'validator';
 
 // membuat folder data jika belum ada
 const dirPath = './data';
@@ -28,11 +29,22 @@ export default function simpanKontak(nama, email, noHp) {
   }
 
   // cek email (validasi)
-  
+  if(email) {
+    if( !validator.isEmail(email) ) {
+      console.log(chalk.red.inverse.bold('Gagal menambahkan data, Email tidak valid'));
+    }
+  }
+
+  // cek nomor handphone
+  if( !validator.isMobilePhone(noHp, 'id-ID') ) {
+    console.log(chalk.red.inverse.bold('Gagal menambahkan data, Nomor handphone tidak valid'));
+  }
+
+
 
   contacts.push(contact);
 
   fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
 
-  console.log('Terima Kasih sudah memasukkan data anda!!');
+  console.log(chalk.yellow.bgGreen('Terima Kasih sudah memasukkan data anda!!'));
 };
